@@ -51,9 +51,9 @@ function openUrl(url: string) {
   window.open(url, "_blank");
 }
 
-const ratingFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+const ratingFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
   // Rank the item
-  const itemRank = rankItem(row.getValue<any>(columnId), value);
+  const itemRank = rankItem(row.getValue<unknown>(columnId), value);
 
   // Store the itemRank info
   addMeta({
@@ -64,7 +64,7 @@ const ratingFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
-const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
+const fuzzyFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
   // Rank the item
   const itemRank = rankItem(row.getValue(columnId), value);
 
@@ -77,91 +77,119 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed;
 };
 
-const problemColDef = (id: string) => {
-  return columnHelper.accessor((row: any) => row[id][3], {
-    header: id,
-    enableColumnFilter: true,
-    size: 365,
-    cell: (info) => {
-      // @ts-ignore
-      let val: any = info.row.original[id];
-      let link = `${host}/problems/${val[1]}`;
-      const onClick = (e: any) => {
-        e.preventDefault();
-        openUrl(link);
-      };
-      let difficulty: number = val[3];
-      let idx = COLORS.findIndex((v) => difficulty >= v.l && difficulty <= v.r);
-      let placement = `${difficulty}`;
-      let sol = info.row.original.QuerySolution?.(val[4]);
-      const [display, setDisplay] = useState(true);
-      useEffect(() => {
-        setTimeout(() => setDisplay(false), 5000);
-      });
-      return (
-        <div>
+function ProblemCell({ row, id }) {
+  let val = row.original[id];
+  let link = `${host}/problems/${val[1]}`;
+  const onClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    openUrl(link);
+  };
+  let difficulty: number = val[3];
+  let idx = COLORS.findIndex((v) => difficulty >= v.l && difficulty <= v.r);
+  let placement = `${difficulty}`;
+  let sol = row.original.QuerySolution?.(val[4]);
+  const [display, setDisplay] = useState(true);
+  useEffect(() => {
+    setTimeout(() => setDisplay(false), 5000);
+  });
+  return (
+    <div>
+      <OverlayTrigger
+        trigger={["hover", "focus"]}
+        key={placement}
+        placement={"bottom"}
+        overlay={
+          <Popover id={`popover-positioned-${placement}`}>
+            {/* <Popover.Header as="h3">{`Popover ${placement}`}</Popover.Header> */}
+            <Popover.Body
+              className={clsx(`rating-color-${idx}`, "ff-st")}
+              style={{ fontSize: "1.2rem" }}
+            >
+              <strong>难度: </strong> {difficulty.toFixed(2)}
+            </Popover.Body>
+          </Popover>
+        }
+      >
+        <RatingCircle difficulty={val[3]} />
+      </OverlayTrigger>
+      <a
+        href={link}
+        onClick={onClick}
+        className={clsx(
+          `rating-color-${idx}`,
+          "ff-st"
+        )} /* style={{color: `var(--rating-color-${idx})`}} */
+      >
+        {val[2]}.{val[0]}
+      </a>
+      {sol && (
+        <div className="fr-wrapper">
           <OverlayTrigger
             trigger={["hover", "focus"]}
             key={placement}
             placement={"bottom"}
             overlay={
               <Popover id={`popover-positioned-${placement}`}>
-                {/* <Popover.Header as="h3">{`Popover ${placement}`}</Popover.Header> */}
                 <Popover.Body
                   className={clsx(`rating-color-${idx}`, "ff-st")}
-                  style={{ fontSize: "1.2rem" }}
+                  style={{ fontSize: "1rem" }}
                 >
-                  <strong>难度: </strong> {difficulty.toFixed(2)}
+                  {sol[0]}
                 </Popover.Body>
               </Popover>
             }
           >
-            <RatingCircle difficulty={val[3]} />
+            <a
+              className="fr ans"
+              href={host + "/problems/" + sol[5] + "/solution/" + sol[1]}
+            >
+              🎈
+            </a>
           </OverlayTrigger>
-          <a
-            href={link}
-            onClick={onClick}
-            className={clsx(
-              `rating-color-${idx}`,
-              "ff-st"
-            )} /* style={{color: `var(--rating-color-${idx})`}} */
-          >
-            {val[2]}.{val[0]}
-          </a>
-          {sol && (
-            <div className="fr-wrapper">
-              <OverlayTrigger
-                trigger={["hover", "focus"]}
-                key={placement}
-                placement={"bottom"}
-                overlay={
-                  <Popover id={`popover-positioned-${placement}`}>
-                    <Popover.Body
-                      className={clsx(`rating-color-${idx}`, "ff-st")}
-                      style={{ fontSize: "1rem" }}
-                    >
-                      {sol[0]}
-                    </Popover.Body>
-                  </Popover>
-                }
-              >
-                <a
-                  className="fr ans"
-                  href={host + "/problems/" + sol[5] + "/solution/" + sol[1]}
-                >
-                  🎈
-                </a>
-              </OverlayTrigger>
-            </div>
-          )}
-          {!sol && display && (
-            <div className="fr-wrapper zen-spinner-td">
-              <Spinner animation="border" size="sm" role="status" />
-            </div>
-          )}
         </div>
-      );
-    },
+      )}
+      {!sol && display && (
+        <div className="fr-wrapper zen-spinner-td">
+          <Spinner animation="border" size="sm" role="status" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ContextCell({ getValue, row }) {
+  let link = `${host}/contest/${row.original.TitleSlug}`;
+  const onClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    openUrl(link);
+  };
+  let mk = getMark();
+  const [ck, setCk] = React.useState<boolean>(mk === row.original.TitleSlug);
+  return (
+    <div className={ck ? "col-contest row-selected" : "col-contest"}>
+      <a href={link} onClick={onClick}>
+        {getValue()}
+      </a>
+      <Form.Group controlId="formBasicCheckbox">
+        <Form.Check
+          type="checkbox"
+          onChange={(e) => {
+            setCk(e.target.checked);
+            setMark(e.target.checked ? row.original.TitleSlug : "");
+          }}
+          checked={ck}
+        />
+      </Form.Group>
+    </div>
+  );
+}
+
+const problemColDef = (id: string) => {
+  return columnHelper.accessor((row) => row[id][3], {
+    header: id,
+    enableColumnFilter: true,
+    size: 365,
+    cell: (info) => <ProblemCell row={info.row} id={id} />,
     footer: (info) => info.column.id,
   });
 };
@@ -175,37 +203,8 @@ const columns = [
     enableResizing: false,
     enableSorting: true,
     size: 150,
-    // filterFn: ratingFilter,
     enableColumnFilter: false,
-    cell: (info) => {
-      let link = `${host}/contest/${info.row.original.TitleSlug}`;
-      const onClick = (e: any) => {
-        e.preventDefault();
-        openUrl(link);
-      };
-      let mk = getMark();
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [ck, setCk] = React.useState<boolean>(
-        mk === info.row.original.TitleSlug
-      );
-      return (
-        <div className={ck ? "col-contest row-selected" : "col-contest"}>
-          <a href={link} onClick={onClick}>
-            {info.getValue()}
-          </a>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check
-              type="checkbox"
-              onChange={(e) => {
-                setCk(e.target.checked);
-                setMark(e.target.checked ? info.row.original.TitleSlug : "");
-              }}
-              checked={ck}
-            />
-          </Form.Group>
-        </div>
-      );
-    },
+    cell: (info) => <ContextCell getValue={info.getValue} row={info.row} />,
     footer: (info) => info.column.id,
   }),
   problemColDef("A"),
@@ -214,76 +213,14 @@ const columns = [
   problemColDef("D"),
 ];
 
-// Element or Position to move + Time in ms (milliseconds)
-function scrollTo(element: any, duration: any) {
-  var e = document.documentElement;
-  if (e.scrollTop === 0) {
-    var t = e.scrollTop;
-    ++e.scrollTop;
-    e = t + 1 === e.scrollTop-- ? e : document.body;
-  }
-  scrollToC(e, e.scrollTop, element, duration);
-}
-
-// Element to move, element or px from, element or px to, time in ms to animate
-function scrollToC(element: any, from: any, to: any, duration: any) {
-  if (duration <= 0) return;
-  if (typeof from === "object") from = from.offsetTop;
-  if (typeof to === "object") to = to.offsetTop;
-  // Choose one effect like easeInQuart
-  scrollToX(element, from, to, 0, 1 / duration, 20, easeInCuaic);
-}
-
-function scrollToX(
-  element: any,
-  xFrom: any,
-  xTo: any,
-  t01: any,
-  speed: any,
-  step: any,
-  motion: any
-) {
-  if (t01 < 0 || t01 > 1 || speed <= 0) {
-    element.scrollTop = xTo;
-    return;
-  }
-  element.scrollTop = xFrom - (xFrom - xTo) * motion(t01);
-  t01 += speed * step;
-
-  setTimeout(function () {
-    scrollToX(element, xFrom, xTo, t01, speed, step, motion);
-  }, step);
-}
-
-/* Effects List */
-function linearTween(t: any) {
-  return t;
-}
-
-function easeInQuad(t: any) {
-  return t * t;
-}
-
-function easeInCuaic(t: any) {
-  return t * t * t;
-}
-
-function MoveToTop() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-}
-
-// Solution Data Type
-type Solution = any[];
-
 function ContestList() {
   // solutions
-  const { solutions, isPending } = useSolutions("");
+  const { solutions, isPending } = useSolutions();
 
   // contests
   const { contests, isPending: loading } = useContests();
 
-  const querySolution = (id: any): any => {
+  const querySolution = (id: string): unknown => {
     return solutions[id];
   };
 
@@ -589,12 +526,12 @@ function Filter({
   column,
   table,
 }: {
-  column: Column<any, unknown>;
-  table: TTable<any>;
+  column: Column<unknown, unknown>;
+  table: TTable<unknown>;
 }) {
   const firstValue = table
     .getPreFilteredRowModel()
-    .flatRows[0]?.getValue<any>(column.id);
+    .flatRows[0]?.getValue<unknown>(column.id);
 
   const columnFilterValue = column.getFilterValue();
 
@@ -654,7 +591,7 @@ function Filter({
   ) : (
     <>
       <datalist id={column.id + "list"}>
-        {sortedUniqueValues.slice(0, 5000).map((value: any) => (
+        {sortedUniqueValues.slice(0, 5000).map((value) => (
           <option value={value} key={value} />
         ))}
       </datalist>
