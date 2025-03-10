@@ -1,0 +1,170 @@
+![位运算题单 位运算题目 位运算基础 灵茶山艾府](https://pic.leetcode.cn/1720229787-pgKZVb-and-005.png)
+
+推荐先阅读：[从集合论到位运算，常见位运算技巧分类总结！](https://leetcode.cn/circle/discuss/CaOJ45/)
+
+## 一、基础题
+
+- [3370. 仅含置位位的最小整数](https://leetcode.cn/problems/smallest-number-with-all-set-bits/) 1199
+- [3226. 使两个整数相等的位更改次数](https://leetcode.cn/problems/number-of-bit-changes-to-make-two-integers-equal/) 1247
+- [1356. 根据数字二进制下 1 的数目排序](https://leetcode.cn/problems/sort-integers-by-the-number-of-1-bits/) 1258
+- [461. 汉明距离](https://leetcode.cn/problems/hamming-distance/) 1282
+- [2220. 转换数字的最少位翻转次数](https://leetcode.cn/problems/minimum-bit-flips-to-convert-number/) 1282 同 461 题
+- [476. 数字的补数](https://leetcode.cn/problems/number-complement/) 做到 $\mathcal{O}(1)$
+- [1009. 十进制整数的反码](https://leetcode.cn/problems/complement-of-base-10-integer/) 同 476 题
+- [868. 二进制间距](https://leetcode.cn/problems/binary-gap/) 1307
+- [3211. 生成不含相邻零的二进制字符串](https://leetcode.cn/problems/generate-binary-strings-without-adjacent-zeros/) 1353
+- [2917. 找出数组中的 K-or 值](https://leetcode.cn/problems/find-the-k-or-of-an-array/) 1389
+- [693. 交替位二进制数](https://leetcode.cn/problems/binary-number-with-alternating-bits/)
+- [2657. 找到两个数组的前缀公共数组](https://leetcode.cn/problems/find-the-prefix-common-array-of-two-arrays/)
+- [231. 2 的幂](https://leetcode.cn/problems/power-of-two/)
+- [342. 4 的幂](https://leetcode.cn/problems/power-of-four/)
+- [191. 位 1 的个数](https://leetcode.cn/problems/number-of-1-bits/)
+- [2595. 奇偶位数](https://leetcode.cn/problems/number-of-even-and-odd-bits/) 做到 $\mathcal{O}(1)$
+- [338. 比特位计数](https://leetcode.cn/problems/counting-bits/) 也可以 DP
+
+## 二、异或（XOR）的性质
+
+- [1486. 数组异或操作](https://leetcode.cn/problems/xor-operation-in-an-array/) 1181
+- [1720. 解码异或后的数组](https://leetcode.cn/problems/decode-xored-array/) 1284
+- [2433. 找出前缀异或的原始数组](https://leetcode.cn/problems/find-the-original-array-of-prefix-xor/) 1367
+- [1310. 子数组异或查询](https://leetcode.cn/problems/xor-queries-of-a-subarray/) 1460
+- [2683. 相邻值的按位异或](https://leetcode.cn/problems/neighboring-bitwise-xor/) 1518
+- [1829. 每个查询的最大异或值](https://leetcode.cn/problems/maximum-xor-for-each-query/) 1523
+- [2997. 使数组异或和等于 K 的最少操作次数](https://leetcode.cn/problems/minimum-number-of-operations-to-make-array-xor-equal-to-k/) 1525
+- [1442. 形成两个异或相等数组的三元组数目](https://leetcode.cn/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/) 1525
+- [2429. 最小异或](https://leetcode.cn/problems/minimize-xor/) 1532
+- [2527. 查询数组异或美丽值](https://leetcode.cn/problems/find-xor-beauty-of-array/) 1550
+- [2317. 操作后的最大异或和](https://leetcode.cn/problems/maximum-xor-after-operations/) 1679
+- [2588. 统计美丽子数组数目](https://leetcode.cn/problems/count-the-number-of-beautiful-subarrays/) 1697
+- [2564. 子字符串异或查询](https://leetcode.cn/problems/substring-xor-queries/) 1959
+- [1734. 解码异或后的排列](https://leetcode.cn/problems/decode-xored-permutation/) 2024
+- [2857. 统计距离为 k 的点对](https://leetcode.cn/problems/count-pairs-of-points-with-distance-k/) 2082
+- [1803. 统计异或值在范围内的数对有多少](https://leetcode.cn/problems/count-pairs-with-xor-in-a-range/) 2479
+- [3215. 用偶数异或设置位计数三元组 II](https://leetcode.cn/problems/count-triplets-with-even-xor-set-bits-ii/)（会员题）
+
+另见 [数据结构题单](https://leetcode.cn/circle/discuss/mOr1u6/) 中的「0-1 字典树（异或字典树）」。
+
+## 三、与或（AND/OR）的性质
+
+AND 的数越多，结果越小。OR 的数越多，结果越大。
+
+- [2980. 检查按位或是否存在尾随零](https://leetcode.cn/problems/check-if-bitwise-or-has-trailing-zeros/) 1234
+- [1318. 或运算的最小翻转次数](https://leetcode.cn/problems/minimum-flips-to-make-a-or-b-equal-to-c/) 1383
+- [2419. 按位与最大的最长子数组](https://leetcode.cn/problems/longest-subarray-with-maximum-bitwise-and/) 1496
+- [2871. 将数组分割成最多数目的子数组](https://leetcode.cn/problems/split-array-into-maximum-number-of-subarrays/) 1750
+- [2401. 最长优雅子数组](https://leetcode.cn/problems/longest-nice-subarray/) 1750
+- [2680. 最大或值](https://leetcode.cn/problems/maximum-or/) 1912 可以做到 $\mathcal{O}(1)$ 额外空间
+- [3133. 数组最后一个元素的最小值](https://leetcode.cn/problems/minimum-array-end/) 1935
+- [3108. 带权图里旅途的最小代价](https://leetcode.cn/problems/minimum-cost-walk-in-weighted-graph/) 2109
+- [3117. 划分数组得到最小的值之和](https://leetcode.cn/problems/minimum-sum-of-values-by-dividing-array/) 2735
+- [3125. 使得按位与结果为 0 的最大数字](https://leetcode.cn/problems/maximum-number-that-makes-result-of-bitwise-and-zero/)（会员题）
+
+### LogTrick
+
+原地写法：[讲解](https://leetcode.cn/problems/find-subarray-with-bitwise-or-closest-to-k/solutions/2798206/li-yong-and-de-xing-zhi-pythonjavacgo-by-gg4d/)
+
+额外维护一个数组：[讲解（方法二）](https://leetcode.cn/problems/smallest-subarrays-with-maximum-bitwise-or/solution/by-endlesscheng-zai1/)
+
+- [3097. 或值至少为 K 的最短子数组 II](https://leetcode.cn/problems/shortest-subarray-with-or-at-least-k-ii/) 1891
+- [2411. 按位或最大的最小子数组长度](https://leetcode.cn/problems/smallest-subarrays-with-maximum-bitwise-or/) 1938
+- [3209. 子数组按位与值为 K 的数目](https://leetcode.cn/problems/number-of-subarrays-with-and-value-of-k/) 2050
+- [3171. 找到按位或最接近 K 的子数组](https://leetcode.cn/problems/find-subarray-with-bitwise-or-closest-to-k/) 2163
+- [1521. 找到最接近目标值的函数值](https://leetcode.cn/problems/find-a-value-of-a-mysterious-function-closest-to-target/) 做法同 3171 题
+- [898. 子数组按位或操作](https://leetcode.cn/problems/bitwise-ors-of-subarrays/)
+
+## 四、拆位 / 贡献法
+
+- [477. 汉明距离总和](https://leetcode.cn/problems/total-hamming-distance/)
+- [1863. 找出所有子集的异或总和再求和](https://leetcode.cn/problems/sum-of-all-subset-xor-totals/) 可以做到 $\mathcal{O}(n)$ 时间
+- [2425. 所有数对的异或和](https://leetcode.cn/problems/bitwise-xor-of-all-pairings/) 1622 可以做到 $\mathcal{O}(n+m)$ 时间
+- [2275. 按位与结果大于零的最长组合](https://leetcode.cn/problems/largest-combination-with-bitwise-and-greater-than-zero/) 1642
+- [1835. 所有数对按位与结果的异或和](https://leetcode.cn/problems/find-xor-sum-of-all-pairs-bitwise-and/) 1825 也有恒等式做法
+- [2505. 所有子序列和的按位或](https://leetcode.cn/problems/bitwise-or-of-all-subsequence-sums/)（会员题）
+
+**十进制拆位**
+
+- [3153. 所有数对中数位不同之和](https://leetcode.cn/problems/sum-of-digit-differences-of-all-pairs/) 1645
+
+## 五、试填法
+
+- [3007. 价值和小于等于 K 的最大数字](https://leetcode.cn/problems/maximum-number-that-sum-of-the-prices-is-less-than-or-equal-to-k/) 2258
+- [421. 数组中两个数的最大异或值](https://leetcode.cn/problems/maximum-xor-of-two-numbers-in-an-array/)，[试填法题解](https://leetcode.cn/problems/maximum-xor-of-two-numbers-in-an-array/solution/tu-jie-jian-ji-gao-xiao-yi-tu-miao-dong-1427d/)
+- [2935. 找出强数对的最大异或值 II](https://leetcode.cn/problems/maximum-strong-pair-xor-ii/) 2349
+- [3145. 大数组元素的乘积](https://leetcode.cn/problems/find-products-of-elements-of-big-array/) 2859
+- [3022. 给定操作次数内使剩余元素的或值最小](https://leetcode.cn/problems/minimize-or-of-remaining-elements-using-operations/) 2918
+- [3287. 求出数组中最大序列值](https://leetcode.cn/problems/find-the-maximum-sequence-value-of-array/) 做到 $\mathcal{O}(nU\log U)$，其中 $U=2^7$
+
+## 六、恒等式
+
+- [1835. 所有数对按位与结果的异或和](https://leetcode.cn/problems/find-xor-sum-of-all-pairs-bitwise-and/) 1825
+- [2354. 优质数对的数目](https://leetcode.cn/problems/number-of-excellent-pairs/) 2076
+
+## 七、思维题
+
+贪心、脑筋急转弯等。
+
+- [2546. 执行逐位运算使字符串相等](https://leetcode.cn/problems/apply-bitwise-operations-to-make-strings-equal/) 1605
+- [1558. 得到目标数组的最少函数调用次数](https://leetcode.cn/problems/minimum-numbers-of-function-calls-to-make-target-array/) 1637
+- [2571. 将整数减少到零需要的最少操作数](https://leetcode.cn/problems/minimum-operations-to-reduce-an-integer-to-0/) 1649 巧妙结论
+- [3315. 构造最小位运算数组 II](https://leetcode.cn/problems/construct-the-minimum-bitwise-array-ii/) 1715
+- [2568. 最小无法得到的或值](https://leetcode.cn/problems/minimum-impossible-or/) 1754
+- [2509. 查询树中环的长度](https://leetcode.cn/problems/cycle-length-queries-in-a-tree/) 1948
+- [2939. 最大异或乘积](https://leetcode.cn/problems/maximum-xor-product/) 2128
+- [2749. 得到整数零需要执行的最少操作数](https://leetcode.cn/problems/minimum-operations-to-make-the-integer-zero/) 2132
+- [2835. 使子序列的和等于目标的最少操作次数](https://leetcode.cn/problems/minimum-operations-to-form-subsequence-with-target-sum/) 2207
+- [2897. 对数组执行操作使平方和最大](https://leetcode.cn/problems/apply-operations-on-array-to-maximize-sum-of-squares/) 2301
+- [810. 黑板异或游戏](https://leetcode.cn/problems/chalkboard-xor-game/) 2341
+- [3064. 使用按位查询猜测数字 I](https://leetcode.cn/problems/guess-the-number-using-bitwise-questions-i/)（会员题）
+- [3094. 使用按位查询猜测数字 II](https://leetcode.cn/problems/guess-the-number-using-bitwise-questions-ii/)（会员题）
+
+## 八、其他
+
+- [136. 只出现一次的数字](https://leetcode.cn/problems/single-number/)
+- [287. 寻找重复数](https://leetcode.cn/problems/find-the-duplicate-number/)
+- [260. 只出现一次的数字 III](https://leetcode.cn/problems/single-number-iii/)
+- [2965. 找出缺失和重复的数字](https://leetcode.cn/problems/find-missing-and-repeated-values/)
+- [137. 只出现一次的数字 II](https://leetcode.cn/problems/single-number-ii/)
+- [645. 错误的集合](https://leetcode.cn/problems/set-mismatch/)
+- [190. 颠倒二进制位](https://leetcode.cn/problems/reverse-bits/)
+- [371. 两整数之和](https://leetcode.cn/problems/sum-of-two-integers/)
+- [201. 数字范围按位与](https://leetcode.cn/problems/bitwise-and-of-numbers-range/)
+- [2154. 将找到的值乘以 2](https://leetcode.cn/problems/keep-multiplying-found-values-by-two/) 可以做到 $\mathcal{O}(n)$ 时间
+- [2044. 统计按位或能得到最大值的子集数目](https://leetcode.cn/problems/count-number-of-maximum-bitwise-or-subsets/) 1568
+- [2438. 二的幂数组中查询范围内的乘积](https://leetcode.cn/problems/range-product-queries-of-powers/) 1610
+- [1680. 连接连续二进制数字](https://leetcode.cn/problems/concatenation-of-consecutive-binary-numbers/) 1630
+- [1261. 在受污染的二叉树中查找元素](https://leetcode.cn/problems/find-elements-in-a-contaminated-binary-tree/) 做到 $\mathcal{O}(1)$ 额外空间
+- [89. 格雷编码](https://leetcode.cn/problems/gray-code/)
+- [1238. 循环码排列](https://leetcode.cn/problems/circular-permutation-in-binary-representation/) 1775
+- [982. 按位与为零的三元组](https://leetcode.cn/problems/triples-with-bitwise-and-equal-to-zero/) 2085
+- [3307. 找出第 K 个字符 II](https://leetcode.cn/problems/find-the-k-th-character-in-string-game-ii/) 2232
+- [1611. 使整数变为 0 的最少操作次数](https://leetcode.cn/problems/minimum-one-bit-operations-to-make-integers-zero/) 2345
+- [LCP 81. 与非的谜题](https://leetcode.cn/problems/ryfUiz/)
+- [751. IP 到 CIDR](https://leetcode.cn/problems/ip-to-cidr/)（会员题）
+- [3141. 最大汉明距离](https://leetcode.cn/problems/maximum-hamming-distances/)（会员题）
+
+## 关联题单
+
+[链表、二叉树与回溯](https://leetcode.cn/circle/discuss/K0n2gO/) 中的部分回溯题目，可以用**二进制搜索**解决。
+
+## 分类题单
+
+[如何科学刷题？](https://leetcode.cn/circle/discuss/RvFUtj/)
+
+1. [滑动窗口与双指针（定长/不定长/单序列/双序列/三指针/分组循环）](https://leetcode.cn/circle/discuss/0viNMK/)
+2. [二分算法（二分答案/最小化最大值/最大化最小值/第K小）](https://leetcode.cn/circle/discuss/SqopEo/)
+3. [单调栈（基础/矩形面积/贡献法/最小字典序）](https://leetcode.cn/circle/discuss/9oZFK9/)
+4. [网格图（DFS/BFS/综合应用）](https://leetcode.cn/circle/discuss/YiXPXW/)
+5. [位运算（基础/性质/拆位/试填/恒等式/思维）](https://leetcode.cn/circle/discuss/dHn9Vk/)
+6. [图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）](https://leetcode.cn/circle/discuss/01LUak/)
+7. [动态规划（入门/背包/状态机/划分/区间/状压/数位/数据结构优化/树形/博弈/概率期望）](https://leetcode.cn/circle/discuss/tXLS3i/)
+8. [常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）](https://leetcode.cn/circle/discuss/mOr1u6/)
+9. [数学算法（数论/组合/概率期望/博弈/计算几何/随机算法）](https://leetcode.cn/circle/discuss/IYT3ss/)
+10. [贪心与思维（基本贪心策略/反悔/区间/字典序/数学/思维/脑筋急转弯/构造）](https://leetcode.cn/circle/discuss/g6KTKL/)
+11. [链表、二叉树与回溯（前后指针/快慢指针/DFS/BFS/直径/LCA/一般树）](https://leetcode.cn/circle/discuss/K0n2gO/)
+12. [字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）](https://leetcode.cn/circle/discuss/SJFwQI/)
+
+[我的题解精选（已分类）](https://github.com/EndlessCheng/codeforces-go/blob/master/leetcode/SOLUTIONS.md)
+
+欢迎关注 [B站@灵茶山艾府](https://space.bilibili.com/206214)
+
+如果你发现有题目可以补充进来，欢迎评论反馈。

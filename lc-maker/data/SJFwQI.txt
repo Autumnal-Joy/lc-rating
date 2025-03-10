@@ -1,0 +1,177 @@
+![Knuth-Morris-Pratt.png](https://pic.leetcode.cn/1728350300-LGjhkL-Knuth-Morris-Pratt.png)
+
+## 一、KMP
+
+定义 $s$ 的真前缀为不等于 $s$ 的前缀，$s$ 的真后缀为不等于 $s$ 的后缀。
+
+定义 $s$ 的 $\text{border}$ 为既是 $s$ 的真前缀又是 $s$ 的真后缀的字符串。例如在 $s=\texttt{aabcaa}$ 中，$\texttt{a}$ 和 $\texttt{aa}$ 都是 $s$ 的 $\text{border}$。
+
+对于模式串 $p$ 的每个前缀 $p[:i]$，计算这个前缀的最长 $\text{border}$ 长度，记在 $\pi$ 数组中。
+
+利用 $\pi$ 数组，可以快速计算模式串 $p$ 出现在文本串 $t$ 的哪些位置上。代码模板见 [我的题解](https://leetcode.cn/problems/find-beautiful-indices-in-the-given-array-ii/solutions/2603695/kmper-fen-cha-zhao-by-endlesscheng-7bjm/)。
+
+> 注：$\pi$ 数组的定义参考《算法导论》，国内数据结构教材通常定义为 $\textit{next}$ 数组。以严蔚敏那本为例，二者的关系是 $\textit{next}[i+1] = \pi[i]+1$，即 $\pi$ 数组整体右移一位，元素值加一。
+
+- [28. 找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/) **模板题**
+- [796. 旋转字符串](https://leetcode.cn/problems/rotate-string/) 做到 $\mathcal{O}(n+m)$
+- [1392. 最长快乐前缀](https://leetcode.cn/problems/longest-happy-prefix/) 1876
+- [3036. 匹配模式数组的子数组数目 II](https://leetcode.cn/problems/number-of-subarrays-that-match-a-pattern-ii/) 1895
+- [1764. 通过连接另一个数组的子数组得到一个数组](https://leetcode.cn/problems/form-array-by-concatenating-subarrays-of-another-array/) 做到线性时间复杂度
+- [1668. 最大重复子字符串](https://leetcode.cn/problems/maximum-repeating-substring/) 做到 $\mathcal{O}(n+m)$
+- [459. 重复的子字符串](https://leetcode.cn/problems/repeated-substring-pattern/) 做到 $\mathcal{O}(n)$
+- [3008. 找出数组中的美丽下标 II](https://leetcode.cn/problems/find-beautiful-indices-in-the-given-array-ii/) 2016
+- [214. 最短回文串](https://leetcode.cn/problems/shortest-palindrome/) 也可以用 Manacher 算法
+- [686. 重复叠加字符串匹配](https://leetcode.cn/problems/repeated-string-match/) ~2200
+- [1397. 找到所有好字符串](https://leetcode.cn/problems/find-all-good-strings/) 2667
+- [3037. 在无限流中寻找模式 II](https://leetcode.cn/problems/find-pattern-in-infinite-stream-ii/)（会员题）同 28 题
+
+## 二、Z 函数（扩展 KMP）
+
+对于字符串 $s$，定义 $z[i]$ 表示后缀 $s[i:]$ 与 $s$ 的 LCP（最长公共前缀）的长度，其中 $s[i:]$ 表示从 $s[i]$ 到 $s[n-1]$ 的子串。
+
+常用技巧是构造字符串 $\textit{pattern}+\textit{s}$，如果发现 $z[m+i]\ge m$（$m$ 是 $\textit{pattern}$ 的长度），则说明从 $s[i]$ 开始的子串与 $\textit{pattern}$ 匹配。
+
+所以上面的一些 KMP 题目（子串匹配相关的），也可以用 Z 函数解决。读者可以尝试用 Z 函数解决 [28. 找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)。
+
+- [2223. 构造字符串的总得分和](https://leetcode.cn/problems/sum-of-scores-of-built-strings/) 2220 **模板题**
+- [3031. 将单词恢复初始状态所需的最短时间 II](https://leetcode.cn/problems/minimum-time-to-revert-word-to-initial-state-ii/) 2278
+- [3045. 统计前后缀下标对 II](https://leetcode.cn/problems/count-prefix-and-suffix-pairs-ii/) 2328
+- [3303. 第一个几乎相等子字符串的下标](https://leetcode.cn/problems/find-the-occurrence-of-first-almost-equal-substring/) 2509
+- [3292. 形成目标字符串需要的最少字符串数 II](https://leetcode.cn/problems/minimum-number-of-valid-strings-to-form-target-ii/) 2662
+
+**LCP 数组**
+
+- [2430. 对字母串可执行的最大删除数](https://leetcode.cn/problems/maximum-deletions-on-a-string/) 2102
+- [3388. 统计数组中的美丽分割](https://leetcode.cn/problems/count-beautiful-splits-in-an-array/) 2365
+- [1977. 划分数字的方案数](https://leetcode.cn/problems/number-of-ways-to-separate-numbers/) 2817
+
+## 三、Manacher 算法
+
+Manacher 算法可以计算以 $s[i]$（或者 $s[i]$ 和 $s[i+1]$）为回文中心的最长回文子串的长度。
+
+此外，还可以：
+
+- 判断任意子串是否为回文串。
+- 计算从 $s[i]$ 开始的最长回文子串的长度。
+- 计算以 $s[i]$ 结尾的最长回文子串的长度。
+
+> Z 函数和 Manacher 算法都会用到类似 Z-box 的概念，在学习时，可以对比体会。
+
+- [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/) **模板题**
+- [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/) 计算回文子串个数
+- [214. 最短回文串](https://leetcode.cn/problems/shortest-palindrome/)
+- [3327. 判断 DFS 字符串是否是回文串](https://leetcode.cn/problems/check-if-dfs-strings-are-palindromes/) 2454
+- [1745. 分割回文串 IV](https://leetcode.cn/problems/palindrome-partitioning-iv/) 做到 $\mathcal{O}(n)$
+- [1960. 两个回文子字符串长度的最大乘积](https://leetcode.cn/problems/maximum-product-of-the-length-of-two-palindromic-substrings/) 2691
+
+## 四、字符串哈希
+
+本题单的大多数题目都可以用字符串哈希解决。
+
+推荐先把 [2156. 查找给定哈希值的子串](https://leetcode.cn/problems/find-substring-with-given-hash-value/) 做了，对理解**多项式哈希**的计算方法有帮助。
+
+模板代码见 [我的题解](https://leetcode.cn/problems/construct-string-with-minimum-cost/solutions/2833949/hou-zhui-shu-zu-by-endlesscheng-32h9/)，包含单模哈希和双模哈希。
+
+- [28. 找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
+- [187. 重复的 DNA 序列](https://leetcode.cn/problems/repeated-dna-sequences/)
+- [1316. 不同的循环子字符串](https://leetcode.cn/problems/distinct-echo-substrings/) 1837
+- [1297. 子串的最大出现次数](https://leetcode.cn/problems/maximum-number-of-occurrences-of-a-substring/) 做到 $\mathcal{O}(n)$
+- [2261. 含最多 K 个可整除元素的子数组](https://leetcode.cn/problems/k-divisible-elements-subarrays/) 做到 $\mathcal{O}(n^2)$
+- [3213. 最小代价构造字符串](https://leetcode.cn/problems/construct-string-with-minimum-cost/) 2171
+- [1367. 二叉树中的链表](https://leetcode.cn/problems/linked-list-in-binary-tree/) 做到线性
+- [1044. 最长重复子串](https://leetcode.cn/problems/longest-duplicate-substring/) 2429
+- [718. 最长重复子数组](https://leetcode.cn/problems/maximum-length-of-repeated-subarray/)
+- [1923. 最长公共子路径](https://leetcode.cn/problems/longest-common-subpath/) 2661
+- [3292. 形成目标字符串需要的最少字符串数 II](https://leetcode.cn/problems/minimum-number-of-valid-strings-to-form-target-ii/) 2662
+- [2168. 每个数字的频率都相同的独特子字符串的数量](https://leetcode.cn/problems/unique-substrings-with-equal-digit-frequency/)（会员题）同 2261 题
+- [1554. 只有一个不同字符的字符串](https://leetcode.cn/problems/strings-differ-by-one-character/)（会员题）
+- [1062. 最长重复子串](https://leetcode.cn/problems/longest-repeating-substring/)（会员题）同 1044 题
+
+## 五、最小表示法
+
+定义**循环左移**操作：把字符串 $s$ 的第一个字符 $s[0]$ 移除，添加到 $s$ 的末尾。例如 $\texttt{abcd}$ 操作一次后得到 $\texttt{bcda}$。
+
+问题：你可以执行任意次循环左移操作，计算你能得到的字典序最小的字符串。
+
+推荐先完成 [1163. 按字典序排在最后的子串](https://leetcode.cn/problems/last-substring-in-lexicographical-order/)，再做下面这题。
+
+- [899. 有序队列](https://leetcode.cn/problems/orderly-queue/) $k=1$ 的情况即为最小表示法，可以 $\mathcal{O}(n)$ 解决
+
+注：和 1163 相似的题目，还有 [3403. 从盒子中找出字典序最大的字符串 I](https://leetcode.cn/problems/find-the-lexicographically-largest-string-from-the-box-i/)。
+
+## 六、字典树
+
+- 见 [数据结构题单](https://leetcode.cn/circle/discuss/mOr1u6/) 第六章。
+
+## 七、AC 自动机
+
+AC 自动机 = 字典树 + KMP。
+
+由于这些题目也可以用其他算法（字符串哈希等）解决，难度分仅供参考。
+
+- [1032. 字符流](https://leetcode.cn/problems/stream-of-characters/) 1970 **模板题**
+- [面试题 17.17. 多次搜索](https://leetcode.cn/problems/multi-search-lcci/) **模板题**
+- [1408. 数组中的字符串匹配](https://leetcode.cn/problems/string-matching-in-an-array/) 做到线性时间复杂度
+- [3213. 最小代价构造字符串](https://leetcode.cn/problems/construct-string-with-minimum-cost/) 2171
+- [3292. 形成目标字符串需要的最少字符串数 II](https://leetcode.cn/problems/minimum-number-of-valid-strings-to-form-target-ii/) 2662
+
+## 八、后缀数组/后缀自动机
+
+由于这些题目也可以用其他算法（字符串哈希等）解决，难度分仅供参考。
+
+- [1163. 按字典序排在最后的子串](https://leetcode.cn/problems/last-substring-in-lexicographical-order/) 1864
+- [1754. 构造字典序最大的合并字符串](https://leetcode.cn/problems/largest-merge-of-two-strings/) 可以做到 $\mathcal{O}(n+m)$
+- [2904. 最短且字典序最小的美丽子字符串](https://leetcode.cn/problems/shortest-and-lexicographically-smallest-beautiful-string/) 可以做到 $\mathcal{O}(n\log n)$
+- [3213. 最小代价构造字符串](https://leetcode.cn/problems/construct-string-with-minimum-cost/) 2171
+- [1044. 最长重复子串](https://leetcode.cn/problems/longest-duplicate-substring/) 2429
+- [718. 最长重复子数组](https://leetcode.cn/problems/maximum-length-of-repeated-subarray/)
+- [1923. 最长公共子路径](https://leetcode.cn/problems/longest-common-subpath/) 2661
+- [1408. 数组中的字符串匹配](https://leetcode.cn/problems/string-matching-in-an-array/)
+- [3076. 数组中的最短非公共子字符串](https://leetcode.cn/problems/shortest-uncommon-substring-in-an-array/)
+- [1316. 不同的循环子字符串](https://leetcode.cn/problems/distinct-echo-substrings/)
+- [3388. 统计数组中的美丽分割](https://leetcode.cn/problems/count-beautiful-splits-in-an-array/) 做到 $\mathcal{O}(n\log n)$ 或 $\mathcal{O}(n)$
+- [2564. 子字符串异或查询](https://leetcode.cn/problems/substring-xor-queries/) 见我题解下的评论
+- [1698. 字符串的不同子字符串个数](https://leetcode.cn/problems/number-of-distinct-substrings-in-a-string/)（会员题）
+- [1062. 最长重复子串](https://leetcode.cn/problems/longest-repeating-substring/)（会员题）同 1044 题
+- [3135. 通过添加或删除结尾字符来同化字符串](https://leetcode.cn/problems/equalize-strings-by-adding-or-removing-characters-at-ends/)（会员题）
+
+## 九、子序列自动机
+
+上面都是和**子串**相关的算法，本节是和**子序列**相关的算法：子序列自动机。
+
+虽然名字有些高大上，但实际上只是预处理 $s[i]$ 右侧最近字母 $\textit{c}$ 的下标而已。
+
+- [792. 匹配子序列的单词数](https://leetcode.cn/problems/number-of-matching-subsequences/) 1695 **模板题**
+- [514. 自由之路](https://leetcode.cn/problems/freedom-trail/) ~2400 做到 $\mathcal{O}(nm)$
+- [2014. 重复 K 次的最长子序列](https://leetcode.cn/problems/longest-subsequence-repeated-k-times/) 2558
+- [1055. 形成字符串的最短路径](https://leetcode.cn/problems/shortest-way-to-form-string/)（会员题）
+- [727. 最小窗口子序列](https://leetcode.cn/problems/minimum-window-subsequence/)（会员题）
+
+## 关联题单
+
+- [数据结构题单](https://leetcode.cn/circle/discuss/mOr1u6/) 中的「**六、字典树（trie）**」。
+- [滑动窗口与双指针题单](https://leetcode.cn/circle/discuss/0viNMK/) 中的「**§4.2 判断子序列**」。
+- [贪心题单](https://leetcode.cn/circle/discuss/g6KTKL/) 中的「**三、字符串贪心**」。
+
+## 分类题单
+
+[如何科学刷题？](https://leetcode.cn/circle/discuss/RvFUtj/)
+
+1. [滑动窗口与双指针（定长/不定长/单序列/双序列/三指针/分组循环）](https://leetcode.cn/circle/discuss/0viNMK/)
+2. [二分算法（二分答案/最小化最大值/最大化最小值/第K小）](https://leetcode.cn/circle/discuss/SqopEo/)
+3. [单调栈（基础/矩形面积/贡献法/最小字典序）](https://leetcode.cn/circle/discuss/9oZFK9/)
+4. [网格图（DFS/BFS/综合应用）](https://leetcode.cn/circle/discuss/YiXPXW/)
+5. [位运算（基础/性质/拆位/试填/恒等式/思维）](https://leetcode.cn/circle/discuss/dHn9Vk/)
+6. [图论算法（DFS/BFS/拓扑排序/最短路/最小生成树/二分图/基环树/欧拉路径）](https://leetcode.cn/circle/discuss/01LUak/)
+7. [动态规划（入门/背包/状态机/划分/区间/状压/数位/数据结构优化/树形/博弈/概率期望）](https://leetcode.cn/circle/discuss/tXLS3i/)
+8. [常用数据结构（前缀和/差分/栈/队列/堆/字典树/并查集/树状数组/线段树）](https://leetcode.cn/circle/discuss/mOr1u6/)
+9. [数学算法（数论/组合/概率期望/博弈/计算几何/随机算法）](https://leetcode.cn/circle/discuss/IYT3ss/)
+10. [贪心与思维（基本贪心策略/反悔/区间/字典序/数学/思维/脑筋急转弯/构造）](https://leetcode.cn/circle/discuss/g6KTKL/)
+11. [链表、二叉树与回溯（前后指针/快慢指针/DFS/BFS/直径/LCA/一般树）](https://leetcode.cn/circle/discuss/K0n2gO/)
+12. [字符串（KMP/Z函数/Manacher/字符串哈希/AC自动机/后缀数组/子序列自动机）](https://leetcode.cn/circle/discuss/SJFwQI/)
+
+[我的题解精选（已分类）](https://github.com/EndlessCheng/codeforces-go/blob/master/leetcode/SOLUTIONS.md)
+
+欢迎关注 [B站@灵茶山艾府](https://space.bilibili.com/206214)
+
+如果你发现有题目可以补充进来，欢迎评论反馈。
