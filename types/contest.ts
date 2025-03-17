@@ -5,7 +5,12 @@ export interface Contest {
   title: string;
   titleSlug: string;
   time: number;
-  company: {};
+  company: {
+    name?: string;
+    description?: string;
+    logo?: string;
+    slug?: string;
+  };
 
   problemIds: Quodra<string>;
 }

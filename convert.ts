@@ -21,7 +21,12 @@ type ContestsIn = {
     _hash: number;
     paid_only: boolean;
   }>;
-  company: {};
+  company: {
+    name?: string;
+    description?: string;
+    logo?: string;
+    slug?: string;
+  };
 }[];
 
 type ZenkIn = {
@@ -117,7 +122,7 @@ async function convert() {
         return (tags.find((t) => t.en === en)?.id || 0).toString();
       }),
       solutionId: _hash.toString(),
-      contestId: p2c[id]?.toString(),
+      contestId: p2c[id]?.toString() as string,
     };
   }
 
